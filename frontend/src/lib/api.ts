@@ -1,7 +1,7 @@
 // API Client - Mock implementation for frontend
 // In production, this would connect to your backend API
 
-const API_BASE_URL = (import.meta as any).env?.VITE_API_URL || 'http://localhost:5000/api';
+const API_BASE_URL = (import.meta as any).env?.VITE_API_URL || 'https://ai-clinic-1-qeeu.onrender.com/api';
 
 class API {
     private baseURL: string;

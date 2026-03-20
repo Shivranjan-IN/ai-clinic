@@ -1,7 +1,7 @@
 // Patient Service - API implementation for backend
 // Uses HTTP requests to backend API
 
-const API_BASE_URL = 'http://localhost:5000';
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'https://ai-clinic-1-qeeu.onrender.com';
 
 export interface Patient {
     patient_id: string;

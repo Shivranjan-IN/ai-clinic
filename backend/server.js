@@ -42,6 +42,8 @@ const ALLOWED_ORIGINS = [
     'http://localhost:3001',
     'http://localhost:5173',
     'http://localhost:5174',
+    'https://ai-clinic-1-qeeu.onrender.com',  // Live deployed frontend (Render)
+    'https://ai-clinic-chi.vercel.app',        // Live deployed frontend (Vercel)
     ...(process.env.FRONTEND_URL ? process.env.FRONTEND_URL.split(',').map(o => o.trim()) : []),
 ];
 
