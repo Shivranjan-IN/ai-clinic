@@ -84,7 +84,7 @@ export function MyAppointments({ patient, onNavigate }: MyAppointmentsProps) {
     try {
       setLoadingSlots(true);
       const res = await api.get(`/appointments/booked-slots/${doctorId}/${dateStr}`);
-      const booked = res.data?.data?.bookedSlots || [];
+      const booked = Array.isArray(res?.bookedSlots) ? res.bookedSlots : [];
       const allSlots = [
         '09:00 AM', '09:30 AM', '10:00 AM', '10:30 AM', '11:00 AM', '11:30 AM',
         '02:00 PM', '02:30 PM', '03:00 PM', '03:30 PM', '04:00 PM', '04:30 PM'
@@ -148,6 +148,31 @@ export function MyAppointments({ patient, onNavigate }: MyAppointmentsProps) {
 
     return matchesSearch && matchesStatus;
   });
+
+  const formatAppointmentTime = (timeStr: string | null | undefined): string => {
+    if (!timeStr) return 'TBD';
+    // If already in AM/PM format, return as-is
+    if (timeStr.includes('AM') || timeStr.includes('PM')) return timeStr;
+    // If ISO string (e.g. "1970-01-01T09:00:00.000Z")
+    if (timeStr.includes('T') && timeStr.includes('Z')) {
+      const d = new Date(timeStr);
+      const h = d.getUTCHours();
+      const m = d.getUTCMinutes();
+      const ampm = h >= 12 ? 'PM' : 'AM';
+      const displayHour = h % 12 || 12;
+      return `${displayHour.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')} ${ampm}`;
+    }
+    // If HH:MM:SS format
+    const parts = timeStr.split(':');
+    if (parts.length >= 2) {
+      const h = parseInt(parts[0], 10);
+      const m = parts[1];
+      const ampm = h >= 12 ? 'PM' : 'AM';
+      const displayHour = h % 12 || 12;
+      return `${displayHour.toString().padStart(2, '0')}:${m} ${ampm}`;
+    }
+    return timeStr;
+  };
 
   const stats = {
     total: appointments.length,
@@ -275,7 +300,7 @@ export function MyAppointments({ patient, onNavigate }: MyAppointmentsProps) {
                       day: 'numeric',
                       year: 'numeric'
                     });
-                    const formattedTime = apt.appointment_time || 'TBD';
+                    const formattedTime = formatAppointmentTime(apt.appointment_time);
                     const doctorInitials = apt.doctor.full_name.split(' ').map(n => n[0]).join('').toUpperCase();
                     const canJoin = apt.status === 'scheduled' && apt.mode === 'video';
 

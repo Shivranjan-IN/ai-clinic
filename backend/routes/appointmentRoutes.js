@@ -8,17 +8,20 @@ const router = express.Router();
 
 router.use(protect);
 
-// User's specific API requirements
-router.get('/', appointmentController.getDoctorAppointments);
-router.post('/start', authorize('doctor'), appointmentController.startAppointment);
-router.put('/status', authorize('doctor', 'admin', 'receptionist', 'patient'), appointmentController.updateStatusFromPost);
-router.put('/reschedule', authorize('doctor', 'admin', 'receptionist', 'patient'), appointmentController.rescheduleAppointment);
-router.delete('/:id', authorize('doctor', 'admin'), appointmentController.deleteAppointment);
+// IMPORTANT: Specific routes MUST come before wildcard routes like /:id
+// Otherwise Express matches /my-appointments, /patient/:id etc. as /:id
 
-// Existing/Other routes
+// Named GET routes (must be before /:id)
 router.get('/my-appointments', appointmentController.getPatientAppointments);
 router.get('/my-upcoming-appointments', appointmentController.getUpcomingPatientAppointments);
+router.get('/patient/:patientId', appointmentController.getAppointmentsByPatient);
+router.get('/upcoming/:patientId', appointmentController.getUpcomingAppointments);
+router.get('/booked-slots/:doctorId/:date', appointmentController.getBookedSlots);
 
+// Doctor appointments list (GET /)
+router.get('/', appointmentController.getDoctorAppointments);
+
+// Create appointment (POST /)
 router.post(
     '/',
     [
@@ -30,10 +33,14 @@ router.post(
     appointmentController.createAppointment
 );
 
-router.get('/patient/:patientId', appointmentController.getAppointmentsByPatient);
-router.get('/upcoming/:patientId', appointmentController.getUpcomingAppointments);
-router.get('/booked-slots/:doctorId/:date', appointmentController.getBookedSlots);
+// Other named action routes
+router.post('/start', authorize('doctor'), appointmentController.startAppointment);
+router.put('/status', authorize('doctor', 'admin', 'receptionist', 'patient'), appointmentController.updateStatusFromPost);
+router.put('/reschedule', authorize('doctor', 'admin', 'receptionist', 'patient'), appointmentController.rescheduleAppointment);
+
+// Wildcard routes MUST be last
 router.get('/:id', appointmentController.getAppointmentById);
+router.delete('/:id', authorize('doctor', 'admin'), appointmentController.deleteAppointment);
 
 router.patch(
     '/:id/status',
