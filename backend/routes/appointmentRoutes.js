@@ -6,6 +6,16 @@ const { protect, authorize } = require('../middleware/auth');
 
 const router = express.Router();
 
+// -------------------------------------------------------------------
+// PUBLIC ROUTES
+// -------------------------------------------------------------------
+
+// Allow anyone to see booked slots so the booking calendar works without login
+router.get('/booked-slots/:doctorId/:date', appointmentController.getBookedSlots);
+
+// -------------------------------------------------------------------
+// PROTECTED ROUTES
+// -------------------------------------------------------------------
 router.use(protect);
 
 // IMPORTANT: Specific routes MUST come before wildcard routes like /:id
@@ -16,7 +26,6 @@ router.get('/my-appointments', appointmentController.getPatientAppointments);
 router.get('/my-upcoming-appointments', appointmentController.getUpcomingPatientAppointments);
 router.get('/patient/:patientId', appointmentController.getAppointmentsByPatient);
 router.get('/upcoming/:patientId', appointmentController.getUpcomingAppointments);
-router.get('/booked-slots/:doctorId/:date', appointmentController.getBookedSlots);
 
 // Doctor appointments list (GET /)
 router.get('/', appointmentController.getDoctorAppointments);
