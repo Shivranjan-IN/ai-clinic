@@ -3,11 +3,11 @@ const router = express.Router();
 const doctorController = require('../controllers/doctorController');
 const { protect, authorize } = require('../middleware/auth');
 
-// All doctor routes are protected
-router.use(protect);
-
 // Routes accessible by both patients and doctors (like fetching the doctor list)
 router.get('/', doctorController.getAllDoctors);
+
+// All other doctor routes are protected
+router.use(protect);
 
 // Other doctor-specific routes require 'doctor' role
 router.use(authorize('doctor'));
