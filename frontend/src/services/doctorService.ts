@@ -44,7 +44,7 @@ class DoctorService {
 
     async getDoctors(): Promise<Doctor[]> {
         try {
-            const response = await fetch(`${API_BASE_URL}/api/doctors`, {
+            const response = await fetch(`${API_BASE_URL}/doctors`, {
                 headers: await this.getAuthHeaders(),
                 credentials: 'include',
             });
@@ -63,7 +63,7 @@ class DoctorService {
 
     async getDoctorById(id: number | string): Promise<Doctor | null> {
         try {
-            const response = await fetch(`${API_BASE_URL}/api/doctors/${id}`, {
+            const response = await fetch(`${API_BASE_URL}/doctors/${id}`, {
                 headers: await this.getAuthHeaders(),
                 credentials: 'include',
             });
@@ -83,7 +83,7 @@ class DoctorService {
 
     async createDoctor(doctor: any): Promise<Doctor> {
         try {
-            const response = await fetch(`${API_BASE_URL}/api/doctors`, {
+            const response = await fetch(`${API_BASE_URL}/doctors`, {
                 method: 'POST',
                 headers: await this.getAuthHeaders(),
                 body: JSON.stringify(doctor),
@@ -104,7 +104,7 @@ class DoctorService {
 
     async updateDoctor(id: number | string, updates: Partial<Doctor>): Promise<Doctor | null> {
         try {
-            const response = await fetch(`${API_BASE_URL}/api/doctors/${id}`, {
+            const response = await fetch(`${API_BASE_URL}/doctors/${id}`, {
                 method: 'PUT',
                 headers: await this.getAuthHeaders(),
                 body: JSON.stringify(updates),
@@ -130,7 +130,7 @@ class DoctorService {
             if (startDate) query.append('startDate', startDate);
             if (endDate) query.append('endDate', endDate);
 
-            const response = await fetch(`${API_BASE_URL}/api/doctors/patients?${query.toString()}`, {
+            const response = await fetch(`${API_BASE_URL}/doctors/patients?${query.toString()}`, {
                 headers: await this.getAuthHeaders(),
                 credentials: 'include',
             });
@@ -146,7 +146,7 @@ class DoctorService {
 
     async deleteDoctorPatient(id: string): Promise<boolean> {
         try {
-            const response = await fetch(`${API_BASE_URL}/api/doctors/patients/${id}`, {
+            const response = await fetch(`${API_BASE_URL}/doctors/patients/${id}`, {
                 method: 'DELETE',
                 headers: await this.getAuthHeaders(),
                 credentials: 'include',
@@ -168,7 +168,7 @@ class DoctorService {
             if (filters.from) query.append('from', filters.from);
             if (filters.to) query.append('to', filters.to);
 
-            const response = await fetch(`${API_BASE_URL}/api/appointments?${query.toString()}`, {
+            const response = await fetch(`${API_BASE_URL}/appointments?${query.toString()}`, {
                 headers: await this.getAuthHeaders(),
                 credentials: 'include',
             });
@@ -183,7 +183,7 @@ class DoctorService {
 
     async startAppointment(appointment_id: string): Promise<any> {
         try {
-            const response = await fetch(`${API_BASE_URL}/api/appointments/start`, {
+            const response = await fetch(`${API_BASE_URL}/appointments/start`, {
                 method: 'POST',
                 headers: await this.getAuthHeaders(),
                 body: JSON.stringify({ appointment_id }),
@@ -200,7 +200,7 @@ class DoctorService {
 
     async updateAppointmentStatus(appointment_id: string, status: string): Promise<any> {
         try {
-            const response = await fetch(`${API_BASE_URL}/api/appointments/status`, {
+            const response = await fetch(`${API_BASE_URL}/appointments/status`, {
                 method: 'PUT',
                 headers: await this.getAuthHeaders(),
                 body: JSON.stringify({ appointment_id, status }),
@@ -217,7 +217,7 @@ class DoctorService {
 
     async rescheduleAppointment(data: { appointment_id: string; appointment_date: string; appointment_time: string }): Promise<any> {
         try {
-            const response = await fetch(`${API_BASE_URL}/api/appointments/reschedule`, {
+            const response = await fetch(`${API_BASE_URL}/appointments/reschedule`, {
                 method: 'PUT',
                 headers: await this.getAuthHeaders(),
                 body: JSON.stringify(data),
@@ -234,7 +234,7 @@ class DoctorService {
 
     async deleteAppointment(id: string): Promise<any> {
         try {
-            const response = await fetch(`${API_BASE_URL}/api/appointments/${id}`, {
+            const response = await fetch(`${API_BASE_URL}/appointments/${id}`, {
                 method: 'DELETE',
                 headers: await this.getAuthHeaders(),
                 credentials: 'include',
@@ -254,7 +254,7 @@ class DoctorService {
             if (filter) query.append('filter', filter);
             if (date) query.append('date', date);
 
-            const response = await fetch(`${API_BASE_URL}/api/doctors/prescriptions?${query.toString()}`, {
+            const response = await fetch(`${API_BASE_URL}/doctors/prescriptions?${query.toString()}`, {
                 headers: await this.getAuthHeaders(),
                 credentials: 'include',
             });
@@ -269,7 +269,7 @@ class DoctorService {
 
     async createDoctorPrescription(data: any): Promise<any> {
         try {
-            const response = await fetch(`${API_BASE_URL}/api/doctors/prescriptions`, {
+            const response = await fetch(`${API_BASE_URL}/doctors/prescriptions`, {
                 method: 'POST',
                 headers: await this.getAuthHeaders(),
                 body: JSON.stringify(data),
@@ -286,7 +286,7 @@ class DoctorService {
 
     async getDoctorStats(): Promise<any> {
         try {
-            const response = await fetch(`${API_BASE_URL}/api/doctors/stats`, {
+            const response = await fetch(`${API_BASE_URL}/doctors/stats`, {
                 headers: await this.getAuthHeaders(),
                 credentials: 'include',
             });
@@ -301,7 +301,7 @@ class DoctorService {
 
     async getCurrentDoctorProfile(): Promise<Doctor | null> {
         try {
-            const response = await fetch(`${API_BASE_URL}/api/doctors/profile`, {
+            const response = await fetch(`${API_BASE_URL}/doctors/profile`, {
                 headers: await this.getAuthHeaders(),
                 credentials: 'include',
             });
@@ -319,7 +319,7 @@ class DoctorService {
 
     async updateCurrentDoctorProfile(updates: Partial<Doctor>): Promise<Doctor | null> {
         try {
-            const response = await fetch(`${API_BASE_URL}/api/doctors/profile`, {
+            const response = await fetch(`${API_BASE_URL}/doctors/profile`, {
                 method: 'PUT',
                 headers: await this.getAuthHeaders(),
                 body: JSON.stringify(updates),
@@ -337,7 +337,7 @@ class DoctorService {
     // --- Patient Documents (For Doctors) ---
     async getPatientDocuments(patientId: string): Promise<any[]> {
         try {
-            const response = await fetch(`${API_BASE_URL}/api/documents/patient/${patientId}`, {
+            const response = await fetch(`${API_BASE_URL}/documents/patient/${patientId}`, {
                 headers: await this.getAuthHeaders(),
                 credentials: 'include',
             });
@@ -358,7 +358,7 @@ class DoctorService {
             formData.append('document_type', type);
 
             const token = localStorage.getItem('auth_token');
-            const response = await fetch(`${API_BASE_URL}/api/documents/patient/upload`, {
+            const response = await fetch(`${API_BASE_URL}/documents/patient/upload`, {
                 method: 'POST',
                 headers: {
                     ...(token ? { 'Authorization': `Bearer ${token}` } : {})
@@ -381,7 +381,7 @@ class DoctorService {
 
     async deletePatientDocument(documentId: number): Promise<boolean> {
         try {
-            const response = await fetch(`${API_BASE_URL}/api/documents/doctor/${documentId}`, {
+            const response = await fetch(`${API_BASE_URL}/documents/doctor/${documentId}`, {
                 method: 'DELETE',
                 headers: await this.getAuthHeaders(),
                 credentials: 'include',
