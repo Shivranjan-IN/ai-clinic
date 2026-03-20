@@ -1,8 +1,11 @@
 import axios from 'axios';
 
+const rawBaseUrl = import.meta.env.VITE_API_URL || 'https://ai-clinic-1-qeeu.onrender.com';
+const API_BASE_URL = `${rawBaseUrl.replace(/\/api$/, '').replace(/\/$/, '')}/api`;
+
 // Create axios instance with base configuration
 const api = axios.create({
-    baseURL: import.meta.env.VITE_API_URL || 'https://ai-clinic-1-qeeu.onrender.com/api',
+    baseURL: API_BASE_URL,
     headers: {
         'Content-Type': 'application/json',
     },

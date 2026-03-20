@@ -1,7 +1,8 @@
 // Patient Service - API implementation for backend
 // Uses HTTP requests to backend API
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'https://ai-clinic-1-qeeu.onrender.com/api';
+const rawBaseUrl = import.meta.env.VITE_API_URL || 'https://ai-clinic-1-qeeu.onrender.com';
+const API_BASE_URL = `${rawBaseUrl.replace(/\/api$/, '').replace(/\/$/, '')}/api`;
 
 export interface Patient {
     patient_id: string;
@@ -25,11 +26,14 @@ export interface Patient {
 
 
 class PatientService {
-    // Helper to convert relative path to absolute URL
     public getFullUrl(path: string | undefined): string | undefined {
         if (!path) return undefined;
         if (path.startsWith('http')) return path; // Already absolute
-        return `${API_BASE_URL}${path}`;
+        
+        const rawBaseUrl = import.meta.env.VITE_API_URL || 'https://ai-clinic-1-qeeu.onrender.com';
+        const absoluteBaseUrl = rawBaseUrl.replace(/\/api$/, '').replace(/\/$/, '');
+        
+        return `${absoluteBaseUrl}${path.startsWith('/') ? '' : '/'}${path}`;
     }
 
     private async getAuthHeaders() {

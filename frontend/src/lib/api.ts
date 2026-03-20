@@ -1,7 +1,8 @@
 // API Client - Mock implementation for frontend
 // In production, this would connect to your backend API
 
-const API_BASE_URL = (import.meta as any).env?.VITE_API_URL || 'https://ai-clinic-1-qeeu.onrender.com/api';
+const rawBaseUrl = (import.meta as any).env?.VITE_API_URL || 'https://ai-clinic-1-qeeu.onrender.com';
+const API_BASE_URL = `${rawBaseUrl.replace(/\/api$/, '').replace(/\/$/, '')}/api`;
 
 class API {
     private baseURL: string;

@@ -1,4 +1,5 @@
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'https://ai-clinic-1-qeeu.onrender.com';
+const rawBaseUrl = import.meta.env.VITE_API_URL || 'https://ai-clinic-1-qeeu.onrender.com';
+const API_BASE_URL = `${rawBaseUrl.replace(/\/api$/, '').replace(/\/$/, '')}/api`;
 
 class MedicineService {
     private async getAuthHeaders() {
