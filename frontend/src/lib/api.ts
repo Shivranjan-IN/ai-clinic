@@ -30,6 +30,7 @@ class API {
             };
             const response = await fetch(`${this.baseURL}${endpoint}`, {
                 headers,
+                credentials: 'include',
             });
             if (response.status === 401) {
                 // For dashboard endpoints, don't redirect - just return mock data
@@ -71,6 +72,7 @@ class API {
                 method: 'POST',
                 headers,
                 body: JSON.stringify(data),
+                credentials: 'include',
             });
             if (!response.ok) {
                 const errorData = await response.json().catch(() => ({ message: 'Unknown error' }));
@@ -89,8 +91,10 @@ class API {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
+                    ...this.getAuthHeaders(),
                 },
                 body: JSON.stringify(data),
+                credentials: 'include',
             });
             if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
             return await response.json();
@@ -104,6 +108,10 @@ class API {
         try {
             const response = await fetch(`${this.baseURL}${endpoint}`, {
                 method: 'DELETE',
+                headers: {
+                    ...this.getAuthHeaders(),
+                },
+                credentials: 'include',
             });
             if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
             return await response.json();

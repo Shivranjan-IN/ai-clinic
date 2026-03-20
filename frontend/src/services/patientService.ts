@@ -44,6 +44,7 @@ class PatientService {
         try {
             const response = await fetch(`${API_BASE_URL}/api/patients`, {
                 headers: await this.getAuthHeaders(),
+                credentials: 'include',
             });
 
             if (!response.ok) {
@@ -67,6 +68,7 @@ class PatientService {
         try {
             const response = await fetch(`${API_BASE_URL}/api/patients/${id}`, {
                 headers: await this.getAuthHeaders(),
+                credentials: 'include',
             });
 
             if (!response.ok) {
@@ -92,6 +94,7 @@ class PatientService {
                 method: 'POST',
                 headers: await this.getAuthHeaders(),
                 body: JSON.stringify(patient),
+                credentials: 'include',
             });
 
             const result = await response.json();
@@ -111,6 +114,7 @@ class PatientService {
         try {
             const response = await fetch(`${API_BASE_URL}/api/patients/profile`, {
                 headers: await this.getAuthHeaders(),
+                credentials: 'include',
             });
             if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
             const result = await response.json();
@@ -131,6 +135,7 @@ class PatientService {
                 method: 'PUT',
                 headers: await this.getAuthHeaders(),
                 body: JSON.stringify(updates),
+                credentials: 'include',
             });
             if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
             const result = await response.json();
@@ -149,6 +154,7 @@ class PatientService {
         try {
             const response = await fetch(`${API_BASE_URL}/api/patients/dashboard/stats`, {
                 headers: await this.getAuthHeaders(),
+                credentials: 'include',
             });
             if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
             const result = await response.json();
@@ -163,6 +169,7 @@ class PatientService {
         try {
             const response = await fetch(`${API_BASE_URL}/api/appointments/my-appointments`, {
                 headers: await this.getAuthHeaders(),
+                credentials: 'include',
             });
             if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
             const result = await response.json();
@@ -173,11 +180,12 @@ class PatientService {
         }
     }
 
-    async getMyPrescriptions(patientId?: string): Promise<any[]> {
+    async getMyPrescriptions(_patientId?: string): Promise<any[]> {
         try {
             // Use the /my endpoint which extracts patient from auth token
             const response = await fetch(`${API_BASE_URL}/api/prescriptions/my`, {
                 headers: await this.getAuthHeaders(),
+                credentials: 'include',
             });
             if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
             const result = await response.json();
@@ -192,6 +200,7 @@ class PatientService {
         try {
             const response = await fetch(`${API_BASE_URL}/api/lab/my-orders`, {
                 headers: await this.getAuthHeaders(),
+                credentials: 'include',
             });
             if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
             const result = await response.json();
@@ -210,7 +219,8 @@ class PatientService {
         try {
             const token = localStorage.getItem('auth_token');
             const response = await fetch(url, {
-                headers: token ? { 'Authorization': `Bearer ${token}` } : {}
+                headers: token ? { 'Authorization': `Bearer ${token}` } : {},
+                credentials: 'include',
             });
             if (!response.ok) throw new Error('Download failed');
             const blob = await response.blob();
@@ -233,7 +243,8 @@ class PatientService {
             const response = await fetch(`${API_BASE_URL}/api/appointments/${appointmentId}/status`, {
                 method: 'PATCH',
                 headers: await this.getAuthHeaders(),
-                body: JSON.stringify({ status })
+                body: JSON.stringify({ status }),
+                credentials: 'include',
             });
             if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
             return true;
@@ -252,7 +263,8 @@ class PatientService {
                     appointment_id: appointmentId,
                     appointment_date: date,
                     appointment_time: time
-                })
+                }),
+                credentials: 'include',
             });
             if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
             return true;
@@ -266,6 +278,7 @@ class PatientService {
         try {
             const response = await fetch(`${API_BASE_URL}/api/appointments/my-upcoming-appointments`, {
                 headers: await this.getAuthHeaders(),
+                credentials: 'include',
             });
             if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
             const result = await response.json();
@@ -280,6 +293,7 @@ class PatientService {
         try {
             const response = await fetch(`${API_BASE_URL}/api/documents`, {
                 headers: await this.getAuthHeaders(),
+                credentials: 'include',
             });
             if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
             const result = await response.json();
@@ -296,6 +310,7 @@ class PatientService {
                 method: 'POST',
                 headers: await this.getAuthHeaders(),
                 body: JSON.stringify({ report_content: content, language }),
+                credentials: 'include',
             });
             if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
             const result = await response.json();
@@ -312,6 +327,7 @@ class PatientService {
                 method: 'POST',
                 headers: await this.getAuthHeaders(),
                 body: JSON.stringify({ prescription_content: content, language }),
+                credentials: 'include',
             });
             if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
             const result = await response.json();
@@ -327,6 +343,7 @@ class PatientService {
             const response = await fetch(`${API_BASE_URL}/api/patients/${id}`, {
                 method: 'DELETE',
                 headers: await this.getAuthHeaders(),
+                credentials: 'include',
             });
 
             if (!response.ok) {
@@ -351,7 +368,8 @@ class PatientService {
                 headers: {
                     ...(token ? { 'Authorization': `Bearer ${token}` } : {})
                 },
-                body: formData
+                body: formData,
+                credentials: 'include',
             });
 
             if (!response.ok) {
@@ -378,7 +396,8 @@ class PatientService {
                 headers: {
                     'Content-Type': 'application/json',
                     ...(token ? { 'Authorization': `Bearer ${token}` } : {})
-                }
+                },
+                credentials: 'include',
             });
             if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
             return true;
@@ -400,7 +419,8 @@ class PatientService {
                 headers: {
                     ...(token ? { 'Authorization': `Bearer ${token}` } : {})
                 },
-                body: formData
+                body: formData,
+                credentials: 'include',
             });
 
             if (!response.ok) {

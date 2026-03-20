@@ -46,6 +46,7 @@ class DoctorService {
         try {
             const response = await fetch(`${API_BASE_URL}/api/doctors`, {
                 headers: await this.getAuthHeaders(),
+                credentials: 'include',
             });
 
             if (!response.ok) {
@@ -64,6 +65,7 @@ class DoctorService {
         try {
             const response = await fetch(`${API_BASE_URL}/api/doctors/${id}`, {
                 headers: await this.getAuthHeaders(),
+                credentials: 'include',
             });
 
             if (!response.ok) {
@@ -85,6 +87,7 @@ class DoctorService {
                 method: 'POST',
                 headers: await this.getAuthHeaders(),
                 body: JSON.stringify(doctor),
+                credentials: 'include',
             });
 
             if (!response.ok) {
@@ -105,6 +108,7 @@ class DoctorService {
                 method: 'PUT',
                 headers: await this.getAuthHeaders(),
                 body: JSON.stringify(updates),
+                credentials: 'include',
             });
 
             if (!response.ok) {
@@ -128,6 +132,7 @@ class DoctorService {
 
             const response = await fetch(`${API_BASE_URL}/api/doctors/patients?${query.toString()}`, {
                 headers: await this.getAuthHeaders(),
+                credentials: 'include',
             });
 
             if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
@@ -144,6 +149,7 @@ class DoctorService {
             const response = await fetch(`${API_BASE_URL}/api/doctors/patients/${id}`, {
                 method: 'DELETE',
                 headers: await this.getAuthHeaders(),
+                credentials: 'include',
             });
             if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
             return true;
@@ -164,6 +170,7 @@ class DoctorService {
 
             const response = await fetch(`${API_BASE_URL}/api/appointments?${query.toString()}`, {
                 headers: await this.getAuthHeaders(),
+                credentials: 'include',
             });
             if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
             const result = await response.json();
@@ -180,6 +187,7 @@ class DoctorService {
                 method: 'POST',
                 headers: await this.getAuthHeaders(),
                 body: JSON.stringify({ appointment_id }),
+                credentials: 'include',
             });
             if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
             const result = await response.json();
@@ -196,6 +204,7 @@ class DoctorService {
                 method: 'PUT',
                 headers: await this.getAuthHeaders(),
                 body: JSON.stringify({ appointment_id, status }),
+                credentials: 'include',
             });
             if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
             const result = await response.json();
@@ -212,6 +221,7 @@ class DoctorService {
                 method: 'PUT',
                 headers: await this.getAuthHeaders(),
                 body: JSON.stringify(data),
+                credentials: 'include',
             });
             if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
             const result = await response.json();
@@ -227,6 +237,7 @@ class DoctorService {
             const response = await fetch(`${API_BASE_URL}/api/appointments/${id}`, {
                 method: 'DELETE',
                 headers: await this.getAuthHeaders(),
+                credentials: 'include',
             });
             if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
             const result = await response.json();
@@ -245,6 +256,7 @@ class DoctorService {
 
             const response = await fetch(`${API_BASE_URL}/api/doctors/prescriptions?${query.toString()}`, {
                 headers: await this.getAuthHeaders(),
+                credentials: 'include',
             });
             if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
             const result = await response.json();
@@ -261,6 +273,7 @@ class DoctorService {
                 method: 'POST',
                 headers: await this.getAuthHeaders(),
                 body: JSON.stringify(data),
+                credentials: 'include',
             });
             if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
             const result = await response.json();
@@ -275,6 +288,7 @@ class DoctorService {
         try {
             const response = await fetch(`${API_BASE_URL}/api/doctors/stats`, {
                 headers: await this.getAuthHeaders(),
+                credentials: 'include',
             });
             if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
             const result = await response.json();
@@ -289,6 +303,7 @@ class DoctorService {
         try {
             const response = await fetch(`${API_BASE_URL}/api/doctors/profile`, {
                 headers: await this.getAuthHeaders(),
+                credentials: 'include',
             });
             if (!response.ok) {
                 if (response.status === 404) return null;
@@ -308,6 +323,7 @@ class DoctorService {
                 method: 'PUT',
                 headers: await this.getAuthHeaders(),
                 body: JSON.stringify(updates),
+                credentials: 'include',
             });
             if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
             const result = await response.json();
@@ -323,6 +339,7 @@ class DoctorService {
         try {
             const response = await fetch(`${API_BASE_URL}/api/documents/patient/${patientId}`, {
                 headers: await this.getAuthHeaders(),
+                credentials: 'include',
             });
             if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
             const result = await response.json();
@@ -346,7 +363,8 @@ class DoctorService {
                 headers: {
                     ...(token ? { 'Authorization': `Bearer ${token}` } : {})
                 },
-                body: formData
+                body: formData,
+                credentials: 'include',
             });
 
             if (!response.ok) {
@@ -366,6 +384,7 @@ class DoctorService {
             const response = await fetch(`${API_BASE_URL}/api/documents/doctor/${documentId}`, {
                 method: 'DELETE',
                 headers: await this.getAuthHeaders(),
+                credentials: 'include',
             });
             if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
             return true;

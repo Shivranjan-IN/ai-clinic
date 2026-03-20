@@ -34,9 +34,43 @@ const prescriptionRoutes = require('./routes/prescriptionRoutes');
 
 const app = express();
 
+// CORS — must be configured before all routes and before Helmet.
+// Reads allowed origins from FRONTEND_URL env var (comma-separated) plus the
+// standard local-dev ports so nothing breaks locally.
+const ALLOWED_ORIGINS = [
+    'http://localhost:3000',
+    'http://localhost:3001',
+    'http://localhost:5173',
+    'http://localhost:5174',
+    ...(process.env.FRONTEND_URL ? process.env.FRONTEND_URL.split(',').map(o => o.trim()) : []),
+];
+
+const corsOptions = {
+    origin: (origin, callback) => {
+        // Allow requests with no origin (mobile apps, curl, Postman, server-to-server)
+        if (!origin) return callback(null, true);
+        if (ALLOWED_ORIGINS.includes(origin)) {
+            return callback(null, true);
+        }
+        callback(new Error(`CORS: origin ${origin} not allowed`));
+    },
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept'],
+    exposedHeaders: ['Set-Cookie'],
+    optionsSuccessStatus: 200, // Some legacy browsers (IE11) choke on 204
+};
+
+// Handle pre-flight OPTIONS requests for ALL routes.
+app.options('*', cors(corsOptions));
+
+// Apply CORS to all subsequent routes.
+app.use(cors(corsOptions));
+
 // Middleware
-app.use(helmet());
-app.use(cors({ origin: ['http://localhost:3000', 'http://localhost:3001', 'http://localhost:5173', 'http://localhost:5174'], credentials: true }));
+app.use(helmet({
+    crossOriginResourcePolicy: { policy: 'cross-origin' }, // Allow images/uploads to be served cross-origin
+}));
 app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

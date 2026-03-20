@@ -16,6 +16,7 @@ class MedicineService {
 
         const response = await fetch(`${API_BASE_URL}/api/medicines?${query.toString()}`, {
             headers: await this.getAuthHeaders(),
+            credentials: 'include',
         });
         const result = await response.json();
         return result.data || [];
@@ -24,6 +25,7 @@ class MedicineService {
     async getCart() {
         const response = await fetch(`${API_BASE_URL}/api/cart`, {
             headers: await this.getAuthHeaders(),
+            credentials: 'include',
         });
         const result = await response.json();
         return result.data || [];
@@ -33,7 +35,8 @@ class MedicineService {
         const response = await fetch(`${API_BASE_URL}/api/cart`, {
             method: 'POST',
             headers: await this.getAuthHeaders(),
-            body: JSON.stringify({ medicine_id: medicineId, quantity })
+            body: JSON.stringify({ medicine_id: medicineId, quantity }),
+            credentials: 'include',
         });
         return await response.json();
     }
@@ -42,6 +45,7 @@ class MedicineService {
         await fetch(`${API_BASE_URL}/api/cart/${itemId}`, {
             method: 'DELETE',
             headers: await this.getAuthHeaders(),
+            credentials: 'include',
         });
     }
 
@@ -49,13 +53,15 @@ class MedicineService {
         await fetch(`${API_BASE_URL}/api/cart/${itemId}`, {
             method: 'PUT',
             headers: await this.getAuthHeaders(),
-            body: JSON.stringify({ quantity })
+            body: JSON.stringify({ quantity }),
+            credentials: 'include',
         });
     }
 
     async getOrders() {
         const response = await fetch(`${API_BASE_URL}/api/orders`, {
             headers: await this.getAuthHeaders(),
+            credentials: 'include',
         });
         const result = await response.json();
         return result.data || [];
@@ -65,7 +71,8 @@ class MedicineService {
         const response = await fetch(`${API_BASE_URL}/api/orders`, {
             method: 'POST',
             headers: await this.getAuthHeaders(),
-            body: JSON.stringify(orderData)
+            body: JSON.stringify(orderData),
+            credentials: 'include',
         });
         return await response.json();
     }
@@ -74,7 +81,8 @@ class MedicineService {
         const response = await fetch(`${API_BASE_URL}/api/bookmarks`, {
             method: 'POST',
             headers: await this.getAuthHeaders(),
-            body: JSON.stringify({ medicine_id: medicineId })
+            body: JSON.stringify({ medicine_id: medicineId }),
+            credentials: 'include',
         });
         return await response.json();
     }
@@ -82,6 +90,7 @@ class MedicineService {
     async getBookmarks() {
         const response = await fetch(`${API_BASE_URL}/api/bookmarks`, {
             headers: await this.getAuthHeaders(),
+            credentials: 'include',
         });
         const result = await response.json();
         return result.data || [];
@@ -90,6 +99,7 @@ class MedicineService {
     async getReminders() {
         const response = await fetch(`${API_BASE_URL}/api/reminders`, {
             headers: await this.getAuthHeaders(),
+            credentials: 'include',
         });
         const result = await response.json();
         return result.data || [];
@@ -99,7 +109,8 @@ class MedicineService {
         const response = await fetch(`${API_BASE_URL}/api/reminders`, {
             method: 'POST',
             headers: await this.getAuthHeaders(),
-            body: JSON.stringify(reminder)
+            body: JSON.stringify(reminder),
+            credentials: 'include',
         });
         return await response.json();
     }
