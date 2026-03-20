@@ -61,6 +61,10 @@ app.use(passport.session());
 // Static files
 app.use('/uploads', express.static('uploads'));
 
+app.get("/", (req, res) => {
+  res.send("Backend is running ");
+});
+
 // Health check
 app.get('/health', (req, res) => {
     res.json({ status: 'OK', message: 'Anti-Gravity Healthcare API is operational in orbit' });
@@ -96,7 +100,7 @@ app.use('*', (req, res) => {
 });
 
 const PORT = process.env.PORT || 5000;
-
+console.log("👉 DATABASE_URL:", process.env.DATABASE_URL);
 app.listen(PORT, () => {
     console.log(`🚀 Anti-Gravity Healthcare Server running on port ${PORT}`);
     console.log(`📊 Environment: ${process.env.NODE_ENV}`);
