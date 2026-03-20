@@ -14,7 +14,7 @@ class MedicineService {
         if (params?.category) query.append('category', params.category);
         if (params?.search) query.append('search', params.search);
 
-        const response = await fetch(`${API_BASE_URL}/api/medicines?${query.toString()}`, {
+        const response = await fetch(`${API_BASE_URL}/medicines?${query.toString()}`, {
             headers: await this.getAuthHeaders(),
             credentials: 'include',
         });
@@ -23,7 +23,7 @@ class MedicineService {
     }
 
     async getCart() {
-        const response = await fetch(`${API_BASE_URL}/api/cart`, {
+        const response = await fetch(`${API_BASE_URL}/cart`, {
             headers: await this.getAuthHeaders(),
             credentials: 'include',
         });
@@ -32,7 +32,7 @@ class MedicineService {
     }
 
     async addToCart(medicineId: string, quantity: number = 1) {
-        const response = await fetch(`${API_BASE_URL}/api/cart`, {
+        const response = await fetch(`${API_BASE_URL}/cart`, {
             method: 'POST',
             headers: await this.getAuthHeaders(),
             body: JSON.stringify({ medicine_id: medicineId, quantity }),
@@ -42,7 +42,7 @@ class MedicineService {
     }
 
     async removeFromCart(itemId: number) {
-        await fetch(`${API_BASE_URL}/api/cart/${itemId}`, {
+        await fetch(`${API_BASE_URL}/cart/${itemId}`, {
             method: 'DELETE',
             headers: await this.getAuthHeaders(),
             credentials: 'include',
@@ -50,7 +50,7 @@ class MedicineService {
     }
 
     async updateCartQuantity(itemId: number, quantity: number) {
-        await fetch(`${API_BASE_URL}/api/cart/${itemId}`, {
+        await fetch(`${API_BASE_URL}/cart/${itemId}`, {
             method: 'PUT',
             headers: await this.getAuthHeaders(),
             body: JSON.stringify({ quantity }),
@@ -59,7 +59,7 @@ class MedicineService {
     }
 
     async getOrders() {
-        const response = await fetch(`${API_BASE_URL}/api/orders`, {
+        const response = await fetch(`${API_BASE_URL}/orders`, {
             headers: await this.getAuthHeaders(),
             credentials: 'include',
         });
@@ -68,7 +68,7 @@ class MedicineService {
     }
 
     async placeOrder(orderData: any) {
-        const response = await fetch(`${API_BASE_URL}/api/orders`, {
+        const response = await fetch(`${API_BASE_URL}/orders`, {
             method: 'POST',
             headers: await this.getAuthHeaders(),
             body: JSON.stringify(orderData),
@@ -78,7 +78,7 @@ class MedicineService {
     }
 
     async toggleBookmark(medicineId: string) {
-        const response = await fetch(`${API_BASE_URL}/api/bookmarks`, {
+        const response = await fetch(`${API_BASE_URL}/bookmarks`, {
             method: 'POST',
             headers: await this.getAuthHeaders(),
             body: JSON.stringify({ medicine_id: medicineId }),
@@ -88,7 +88,7 @@ class MedicineService {
     }
 
     async getBookmarks() {
-        const response = await fetch(`${API_BASE_URL}/api/bookmarks`, {
+        const response = await fetch(`${API_BASE_URL}/bookmarks`, {
             headers: await this.getAuthHeaders(),
             credentials: 'include',
         });
@@ -97,7 +97,7 @@ class MedicineService {
     }
 
     async getReminders() {
-        const response = await fetch(`${API_BASE_URL}/api/reminders`, {
+        const response = await fetch(`${API_BASE_URL}/reminders`, {
             headers: await this.getAuthHeaders(),
             credentials: 'include',
         });
@@ -106,7 +106,7 @@ class MedicineService {
     }
 
     async addReminder(reminder: any) {
-        const response = await fetch(`${API_BASE_URL}/api/reminders`, {
+        const response = await fetch(`${API_BASE_URL}/reminders`, {
             method: 'POST',
             headers: await this.getAuthHeaders(),
             body: JSON.stringify(reminder),
