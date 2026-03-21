@@ -1,12 +1,1 @@
-# TODO - Patient Document Database Storage Implementation
-
-## Plan Approval: ✅ Confirmed by user
-
-## Tasks:
-- [x] 1. Update Prisma schema - Add mime_type, make file_data required
-- [x] 2. Update upload middleware - Use memory storage instead of disk storage
-- [x] 3. Update document controller - Store binary data, add download/view endpoints
-- [x] 4. Update document routes - Add download endpoint
-- [x] 5. Run Prisma migration to update database
-- [x] 6. Test the implementation ✅
-
+# Prisma Migration Fix for Emails.user_id Error\n\nStatus: 🔄 In Progress\n\n## Current Status:\n- Migration status: No migrations folder, local DB schema 'up to date'\n- `prisma db push` running but stalled on data issues (NULL mobile_number, missing password_hash default)\n\n**Action needed for db push prompt: Press 'N' to cancel (avoid data loss)**\n\n## Steps:\n\n1. ✅ Generated Prisma client (if needed)\n\n2. ✅ Checked migration status\n\n2.5. 🔄 **DB Push stalled** - Cancel with 'N'\n\n3. **Manual DB Fix for emails.user_id**\n   ```bash\n   # Create SQL migration file\n   # Run in Supabase or Render DB:\n   ALTER TABLE emails ADD COLUMN IF NOT EXISTS \"user_id\" INT;\n   ALTER TABLE emails ADD CONSTRAINT \"emails_user_id_fkey\" FOREIGN KEY (\"user_id\") REFERENCES \"users\"(\"user_id\");\n   ```\n\n4. **Test local server**\n   cd backend &amp;&amp; npm start\n   Test Google auth at http://localhost:5000/api/auth/google\n\n5. **Fix Render Prod**\n   - Add Prisma migrate to Render build command or run SQL in Render Postgres\n   - Redeploy\n\n6. **Verify**\n   cd backend &amp;&amp; npx prisma studio\n   Check emails table has user_id column
